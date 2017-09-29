@@ -6,11 +6,11 @@
 task main(){
 	bool forward = true;
 	while(true) {
-		if(vexRT[Btn6U] == true){
+		if(vexRT[Btn6U]){
 			// Pull in paint cans
 			motor[CanMotor] = 127;
 		}
-		else if(vexRT[Btn6D] == true){
+		else if(vexRT[Btn6D]){
 			// Push cans back out
 			motor[CanMotor] = -127;
 		}
