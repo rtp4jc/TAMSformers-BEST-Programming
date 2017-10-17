@@ -9,9 +9,10 @@
 Btn6U = pull in paint cans
 Btn6D = push out paint cans
 Btn7U = toggle to backward drive (default = forward)
-Btn5U = toggle to arm up (default = arm down)
+Btn5D = mannequin arm down
+Btn5U = mannequin arm up
 Ch2 & Ch3 (joystick) = right & left motor forward/backward
-Btn7D =
+Btn8U = shooter
 */
 
 task main() {
