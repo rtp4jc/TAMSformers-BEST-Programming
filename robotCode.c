@@ -13,6 +13,7 @@ Btn7U = toggle to backward drive (default = forward)
 Btn5U = toggle to arm up (default = arm down)
 Btn8U = hold to fire the shooter
 Ch2 & Ch3 (joystick) = right & left motor forward/backward
+Btn7D =
 */
 
 task main() {
@@ -21,6 +22,7 @@ task main() {
 
 	// boolean variable to control the arm state
 	bool armUp = true;
+
 
 	while (true) {
 
@@ -67,29 +69,19 @@ task main() {
 		// non-inverted controls: U -> raises the arm
 		// 										    D -> lowers the arm
 
-
-		/*if (vexRT[Btn5U]) {
-			// set both servos to full power forward
+		// use when the arm is up
+		if (vexRT[Btn5D] && armUp) {
+			// both motors to full power, offset to account for reversed spin
 			motor[MannequinServoRight] = 127;
-			motor[MannequinServoLeft] = 127;
-		}
-		else if (vexRT[Btn5D]) {
-			// set both servos to full power reverse
-			motor[MannequinServoRight] = -127;
 			motor[MannequinServoLeft] = -127;
+			armUp = false; // set the arm state to down
 		}
-		else {
-			// set both servos to neutral
-			// default state is full up
-			motor[MannequinServoRight] = 127;
+		// use when the arm is down
+		else if (vexRT[Btn5U] && !armUp) {
+			// both motors to full power, offset to account for reversed spin
+			motor[MannequinServoRight] = -127;
 			motor[MannequinServoLeft] = 127;
-		}*/
-
-		if (vexRT[Btn5U]) {
-			armUp = true;
-		}
-		else {
-			armUp = false;
+			armUp = true; // set the arm state to up
 		}
 	}
 }
