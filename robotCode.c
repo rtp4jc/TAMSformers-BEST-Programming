@@ -13,7 +13,7 @@ Btn7U = toggle to backward drive (default = forward)
 Btn5U = toggle to arm up (default = arm down)
 Btn8U = hold to fire the shooter
 Ch2 & Ch3 (joystick) = right & left motor forward/backward
-Btn7D =
+Btn8U = shooter
 */
 
 task main() {
