@@ -17,12 +17,26 @@ Btn7D =
 */
 
 task main() {
-	// boolean variable to control the tank drive state
-	bool forward = true;
+	// boolean variable to determine the condition of the button
+	bool driveStateButtonHeld = false;
 
-	// boolean variable to control the arm state
-	bool armUp = true;
+	// enum to control the state of the mechanical arm
+	enum ArmState {
+		DOWN, // false
+		UP // true
+	};
 
+	// enum to control the state of the tank drive
+	enum DriveState {
+		BACKWARD, // false
+		FORWARD // true
+	};
+
+	// boolean variable to control the arm state initialized to an enumerated type
+	bool driveState = FORWARD;
+
+	// boolean variable to control the arm state initialized to an enumerated type
+	bool armState = UP;
 
 	while (true) {
 
@@ -46,15 +60,16 @@ task main() {
 		}
 
 		// sets tank drive state
-		if (vexRT[Btn7U]) {
-			forward = false; // backward state
+		if (vexRT[Btn7U] && !driveStateButtonHeld) {
+			driveStateButtonHeld = true; // recognize the button is pressed
+			driveState = !driveState; // flip the drive state
 		}
-		else {
-			forward = true; // forward state
+		else if (!vexRT[Btn7U]) {
+			driveStateButtonHeld = false; // recognize the button is not pressed
 		}
 
 		// control tank drive
-		if (forward) {
+		if (driveState) {
 			// drive forward with full power on both motors
 			motor[RightMotor] = vexRT[Ch2];
 			motor[LeftMotor] = vexRT[Ch3];
@@ -70,18 +85,18 @@ task main() {
 		// 										    D -> lowers the arm
 
 		// use when the arm is up
-		if (vexRT[Btn5D] && armUp) {
+		if (vexRT[Btn5D] && armState) {
 			// both motors to full power, offset to account for reversed spin
 			motor[MannequinServoRight] = 127;
 			motor[MannequinServoLeft] = -127;
-			armUp = false; // set the arm state to down
+			armState = DOWN; // set the arm state to down
 		}
 		// use when the arm is down
-		else if (vexRT[Btn5U] && !armUp) {
+		else if (vexRT[Btn5U] && !armState) {
 			// both motors to full power, offset to account for reversed spin
 			motor[MannequinServoRight] = -127;
 			motor[MannequinServoLeft] = 127;
-			armUp = true; // set the arm state to up
+			armState = UP; // set the arm state to up
 		}
 	}
 }
