@@ -22,8 +22,9 @@ task main() {
 
 	// enum to control the state of the mechanical arm
 	enum ArmState {
-		DOWN, // false
-		UP // true
+		DOWN = 0, // 0
+		NEUTRAL = 1, // 1
+		UP = 2 // 2
 	};
 
 	// enum to control the state of the tank drive
@@ -35,8 +36,8 @@ task main() {
 	// boolean variable to control the arm state initialized to an enumerated type
 	bool driveState = FORWARD;
 
-	// boolean variable to control the arm state initialized to an enumerated type
-	bool armState = UP;
+	// int variable to control the arm state initialized to an enumerated type
+	ArmState armState = UP;
 
 	while (true) {
 
@@ -84,18 +85,24 @@ task main() {
 		// non-inverted controls: U -> raises the arm
 		// 										    D -> lowers the arm
 
-		// use when the arm is up
-		if (vexRT[Btn5D] && armState) {
+		// use when the arm is not in the down state
+		if (vexRT[Btn5D] && armState != DOWN) {
 			// both motors to full power, offset to account for reversed spin
-			motor[MannequinServoRight] = 127;
-			motor[MannequinServoLeft] = -127;
+			motor[MannequinServoRight] = 85;
+			motor[MannequinServoLeft] = -85;
 			armState = DOWN; // set the arm state to down
 		}
-		// use when the arm is down
-		else if (vexRT[Btn5U] && !armState) {
+		// use when the arm is not in the neutral state
+		else if (vexRT[Btn5U] && armState != NEUTRAL) {
 			// both motors to full power, offset to account for reversed spin
-			motor[MannequinServoRight] = -127;
-			motor[MannequinServoLeft] = 127;
+			motor[MannequinServoRight] = 0;
+			motor[MannequinServoLeft] = 0;
+			armState = NEUTRAL; // set the arm state to up
+		}
+		// use when the arm is not in the up state
+		else if (vexRT[Btn7R] && armState != UP) {
+	  	motor[MannequinServoRight] = -127;
+	  	motor[MannequinServoLeft] = 127;
 			armState = UP; // set the arm state to up
 		}
 	}
