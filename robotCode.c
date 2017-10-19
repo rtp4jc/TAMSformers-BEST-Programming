@@ -105,7 +105,6 @@ task main() {
 		else if (vexRT[Btn7R] && armState != UP) {
 	  	motor[MannequinServoRight] = -127;
 	  	motor[MannequinServoLeft] = 127;
-
 			armState = UP; // set the arm state to up
 		}
 	}
