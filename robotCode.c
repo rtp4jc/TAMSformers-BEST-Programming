@@ -33,12 +33,14 @@ task main() {
 		FORWARD // true
 	};
 
+  
 	// boolean variable to control the arm state initialized to an enumerated type
 	bool driveState = FORWARD;
 
 	// int variable to control the arm state initialized to an enumerated type
 	ArmState armState = UP;
 
+  
 	while (true) {
 
 		// controls the paint can apparatus
@@ -82,8 +84,8 @@ task main() {
 		}
 
 		// mannequin arm controls
-		// non-inverted controls: U -> raises the arm
-		// 										    D -> lowers the arm
+		// non-inverted controls: 5U -> raises the arm to a neutral position
+		// 										    5D -> lowers the arm
 
 		// use when the arm is not in the down state
 		if (vexRT[Btn5D] && armState != DOWN) {
